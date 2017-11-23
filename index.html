@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>socket.io</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.slim.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <style>
+     *{
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+     }
+
+     html,body{
+       width: 100%;
+       height: 100%;
+     }
+
+      body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+     .main{
+       padding: 3px;
+       width: 50%;
+       height: 60%;
+       position: relative;
+       background-color : #d5d5d5;
+       border-radius: 5px;
+     }
+     form{
+       position: absolute;
+       width: 98%;
+       height: 10%;
+       border: 0;
+       bottom: 1%;
+       margin-left: 1px;
+     }
+     input {
+       border: 0;
+       width: 89%;
+       float: left;
+       border-radius: 5px;
+       height: 100%;
+       font-size: 20px;
+       padding: 5px 10px;
+     }
+    button{
+      width: 10%;
+      float: right;
+      height: 100%;
+      border-radius: 5px;
+    }
+    li{
+      list-style: none;
+      margin: 5px 0;
+      background-color: #FFF;
+      border-radius: 5px;
+      display: inline-block;
+      height: 30px;
+      padding: 5px;
+      line-height: 20px;
+    }
+    ul{
+      padding: 5px;
+      display: block;
+      overflow: overlay;
+    }
+  </style>
+</head>
+<body>
+  <div class="main">
+    <ul></ul>
+    <form action="">
+        <input type="text" name="" value="">
+        <button type="submit" name="button">发送</button>
+    </form>
+  </div>
+
+  <script type="text/javascript">
+     var socket = io();
+
+     function message(msg){
+         $('ul').append('<li>'+msg+'</li>')
+     }
+
+     $('form').submit(function(){
+         if($('input').val()){
+           socket.emit('go',$('input').val())
+           $('input').val('')
+         }
+         return false;
+     })
+
+     socket.on('back',function(msg){
+        message(msg)
+     })
+  </script>
+</body>
+</html>
