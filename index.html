@@ -11,7 +11,7 @@
      *{
        margin: 0;
        padding: 0;
-       box-sizing: border-box;
+       outline: 0;
      }
 
      html,body{
@@ -25,19 +25,21 @@
         align-items: center;
       }
      .main{
-       padding: 3px;
+       padding: 1%;
        width: 50%;
        height: 60%;
        position: relative;
-       background-color : #d5d5d5;
+       background-color : #F3F3F3;
        border-radius: 5px;
+       box-shadow: 0 0 3px #DDDDDD;
+       border: 1px solid #D5D5D5;
      }
      form{
        position: absolute;
-       width: 98%;
+       width: 96%;
        height: 10%;
        border: 0;
-       bottom: 1%;
+       bottom: 2%;
        margin-left: 1px;
      }
      input {
@@ -47,7 +49,9 @@
        border-radius: 5px;
        height: 100%;
        font-size: 20px;
-       padding: 5px 10px;
+       padding: 0 10px;
+       box-sizing: border-box;
+       box-shadow: 0 0 3px #DDDDDD;
      }
     button{
       width: 10%;
@@ -60,10 +64,13 @@
       margin: 5px 0;
       background-color: #FFF;
       border-radius: 5px;
-      display: inline-block;
-      height: 30px;
-      padding: 5px;
+      display: table;
+      height: 20px;
+      padding: 0px 6px 3px;
       line-height: 20px;
+      font-size: 13px;
+      box-shadow: 0 0 3px #E0F0FF;
+      border: 1px solid #DDDDDD;
     }
     ul{
       padding: 5px;
