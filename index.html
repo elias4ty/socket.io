@@ -25,7 +25,6 @@
         align-items: center;
       }
      .main{
-       padding: 1%;
        width: 50%;
        height: 60%;
        position: relative;
@@ -34,9 +33,17 @@
        box-shadow: 0 0 3px #DDDDDD;
        border: 1px solid #D5D5D5;
      }
+     section{
+       padding: 1%;
+       position: relative;
+       width: 100%;
+       height: 92%;
+       top:8%;
+       box-sizing: border-box;
+     }
      form{
        position: absolute;
-       width: 96%;
+       width: 98%;
        height: 10%;
        border: 0;
        bottom: 2%;
@@ -75,25 +82,54 @@
     ul{
       padding: 5px;
       display: block;
-      overflow: overlay;
+      overflow: auto;
+      height: 83%;
+    }
+    header{
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 8%;
+      background-color: #3C3C3C;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      box-shadow: 0 0 3px #E0F0FF;
+    }
+    .opposite{
+      text-align: center;
+      font-size: 14px;
+      color: #FFF;
+      width: 50%;
+      position: absolute;
+      top: 25%;
+      left: 25%;
     }
   </style>
 </head>
 <body>
   <div class="main">
-    <ul></ul>
-    <form action="">
-        <input type="text" name="" value="">
-        <button type="submit" name="button">发送</button>
-    </form>
+    <header>
+      <div class="opposite" data-user="桂纶镁">桂纶镁</div>
+    </header>
+    <section>
+      <ul></ul>
+      <form action="">
+          <input type="text" name="" value="">
+          <button type="submit" name="button">发送</button>
+      </form>
+    </section>
   </div>
 
   <script type="text/javascript">
-     var socket = io();
+     var socket = io(),typing = false;
 
      function message(msg){
          $('ul').append('<li>'+msg+'</li>')
      }
+
+      socket.on('comet',function(msg){
+        message(msg);
+      })
 
      $('form').submit(function(){
          if($('input').val()){
@@ -101,6 +137,29 @@
            $('input').val('')
          }
          return false;
+     })
+
+     $('input').keyup(function(e){
+       if(e.keyCode == 13){
+          $('input').trigger('blur')
+          return
+       }
+
+       if(!typing){
+         socket.emit('typing')
+         socket.on('opp',function(){
+            $('.opposite').text('对方正在输入 ...')
+         })
+         console.log('typing')
+         typing = true;
+       }
+     }).blur(function(){
+       socket.emit('type end')
+       socket.on('opp end',function(){
+          $('.opposite').text('桂纶镁')
+       })
+
+       typing = false
      })
 
      socket.on('back',function(msg){
