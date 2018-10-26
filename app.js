@@ -11,7 +11,10 @@ app.get('/',function(req,res){
 io.on('connection',socket => {
   socket.on('go',msg =>{
     console.log('msg:' + msg)
-    io.emit('back',msg)
+
+    setTimeout(() => {
+      io.emit('back','back:'+msg)
+    },500)
   })
 
   socket.on('typing',function(){
@@ -34,7 +37,7 @@ function comet(socket){
     return {
       goNext(){
           ++i;
-        if(i<=10){
+        if(i<=3){
           console.log(`第${i}次推送数据`)
           socket.emit('comet',`第${i}次推送数据`)
         }else{

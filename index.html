@@ -67,17 +67,19 @@
       border-radius: 5px;
     }
     li{
-      list-style: none;
-      margin: 5px 0;
-      background-color: #FFF;
-      border-radius: 5px;
-      display: table;
+      margin: 10px 0;
+      display: block;
       height: 20px;
-      padding: 0px 6px 3px;
       line-height: 20px;
-      font-size: 13px;
-      box-shadow: 0 0 3px #E0F0FF;
+      font-size: 13px;   
+    }
+    li.send span{
+      float: left;
+      border-radius: 5px;
+      background-color: #FFF;
       border: 1px solid #DDDDDD;
+      box-shadow: 0 0 3px #E0F0FF;
+      padding: 0px 6px;
     }
     ul{
       padding: 5px;
@@ -104,6 +106,15 @@
       top: 25%;
       left: 25%;
     }
+    li.back span{
+        float: right;
+      background-color: #FFF;
+            border-radius: 5px;
+      padding: 0px 6px;
+
+      border: 1px solid #DDDDDD;
+      box-shadow: 0 0 3px #E0F0FF;        
+    }
   </style>
 </head>
 <body>
@@ -124,16 +135,21 @@
      var socket = io(),typing = false;
 
      function message(msg){
-         $('ul').append('<li>'+msg+'</li>')
+         $('ul').append('<li class="send"><span>'+msg+'</span></li>')
      }
 
+     function backmsg(msg){
+         $('ul').append('<li class="back"><span>'+msg+'</span></li>')
+     }
       socket.on('comet',function(msg){
         message(msg);
       })
 
      $('form').submit(function(){
          if($('input').val()){
-           socket.emit('go',$('input').val())
+           var msg = $('input').val()
+           socket.emit('go',msg)
+           message(msg)
            $('input').val('')
          }
          return false;
@@ -163,7 +179,7 @@
      })
 
      socket.on('back',function(msg){
-        message(msg)
+        backmsg(msg)
      })
   </script>
 </body>
